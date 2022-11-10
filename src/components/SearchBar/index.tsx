@@ -7,14 +7,16 @@ import useClear from '../../hooks/useClear';
 import useKeyboard from '../../hooks/useKeyboard';
 import { ReactComponent as MagIcon } from '../../assets/icons/magnifier.svg';
 import SearchButton from './SearchButton';
+import useSuggestionFocus from '../../hooks/useSuggestionFocus';
 
 function SearchBar() {
   const { searchInputRef, isFocused } = useInput();
   const handleClear = useClear(searchInputRef);
   const { handleKeyDown } = useKeyboard(searchInputRef);
+  const handleFocus = useSuggestionFocus(searchInputRef);
 
   return (
-    <Container isFocused={isFocused} onKeyDown={handleKeyDown} className="search-bar">
+    <Container isFocused={isFocused} onKeyDown={handleKeyDown} onFocus={handleFocus} className="search-bar">
       <MagIcon />
       <Input searchInputRef={searchInputRef} />
       {isFocused ? <SuggestionList /> : null}

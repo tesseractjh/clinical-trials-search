@@ -2,13 +2,6 @@ import { useRecoilCallback } from 'recoil';
 import { searchInputState } from '../recoil/searchBar';
 
 function useKeyboard(searchInputRef: React.RefObject<HTMLInputElement>) {
-  const setInputValue = (value: string) => {
-    if (!searchInputRef?.current) {
-      return;
-    }
-    searchInputRef.current.value = value;
-  };
-
   const restoreInputValue = useRecoilCallback(
     ({ snapshot }) =>
       async () => {
@@ -40,7 +33,6 @@ function useKeyboard(searchInputRef: React.RefObject<HTMLInputElement>) {
         const $nextSuggestion = suggestions[0];
         if ($nextSuggestion instanceof HTMLElement) {
           $nextSuggestion.focus();
-          setInputValue($nextSuggestion.innerText);
         }
       }
       if (key === 'ArrowUp') {
@@ -55,7 +47,6 @@ function useKeyboard(searchInputRef: React.RefObject<HTMLInputElement>) {
       const $nextSuggestion = suggestions[curIndex + 1];
       if ($nextSuggestion instanceof HTMLElement) {
         $nextSuggestion.focus();
-        setInputValue($nextSuggestion.innerText);
       }
     }
 
@@ -69,7 +60,6 @@ function useKeyboard(searchInputRef: React.RefObject<HTMLInputElement>) {
       const $prevSuggestion = suggestions[curIndex - 1];
       if ($prevSuggestion instanceof HTMLElement) {
         $prevSuggestion.focus();
-        setInputValue($prevSuggestion.innerText);
       }
     }
   };
